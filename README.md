@@ -1,2 +1,2 @@
-# vaaru.github.io
+# kikkiakki.github.io
 Personal site
