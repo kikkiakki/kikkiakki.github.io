@@ -1,0 +1,12 @@
+---
+layout: layout.html
+title: Gallery
+---
+
+<a href="/"><h2><- Home</h2></a>
+
+<div>
+    {% for image in collections.paintings %}
+    <img src="/{{ image }}" height="250">
+    {% endfor %}
+</div>

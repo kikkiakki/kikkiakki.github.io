@@ -2,6 +2,8 @@
 layout: layout.html
 ---
 
+<a href="/gallery"><h2>Gallery</h2></a>
+
 {% for post in collections.post %}
 <a href="{{ post.url }}"><h2>{{ post.data.title }}</h2></a>
 <p>{{ post.date }}</p>

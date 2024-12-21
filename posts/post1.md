@@ -1,5 +1,5 @@
 ---
-title: Hey post
+title: Hi
 ---
 
-hey this is my amazing post
+this is my website with a brand new gallery

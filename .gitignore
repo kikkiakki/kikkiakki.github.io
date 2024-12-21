@@ -1,2 +1,5 @@
 # Ignore build output
 _site/
+
+# Ignore node modules
+node_modules/
