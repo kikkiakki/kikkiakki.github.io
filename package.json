@@ -1,6 +1,7 @@
 {
   "type": "commonjs",
   "dependencies": {
+    "@11ty/eleventy-img": "^5.0.0",
     "fast-glob": "^3.3.2"
   }
 }

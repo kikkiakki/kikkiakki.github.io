@@ -7,6 +7,6 @@ title: Gallery
 
 <div>
     {% for image in collections.paintings %}
-    <img src="/{{ image }}" height="250">
+    <img src="{{ image.jpeg[0].url }}" height="250">
     {% endfor %}
 </div>
