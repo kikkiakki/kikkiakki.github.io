@@ -1,11 +1,19 @@
----
-layout: layout.html
----
+<!DOCTYPE html>
+<html>
 
-<a href="/gallery"><h2>Gallery</h2></a>
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-{% for post in collections.post %}
-<a href="{{ post.url }}"><h2>{{ post.data.title }}</h2></a>
-<p>{{ post.date }}</p>
-<p>{{ post.content }}</p>
-{% endfor %}
+<body>
+
+    <h1>vaaru</h1>
+
+    <a href="/gallery.html">
+        <button>Gallery</button>
+    </a>
+    <p>My first paragraph.</p>
+
+</body>
+
+</html>
