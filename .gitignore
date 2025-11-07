@@ -1,5 +1,7 @@
 # Ignore build output
-_site/
+public/
+resources/
+.hugo_build.lock
 
-# Ignore node modules
-node_modules/
+# Ignore blog
+content/posts/
