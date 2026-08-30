@@ -1,4 +1,4 @@
-name: Build site using Eleventy and deploy on GitHub pages
+name: Build site using Astro and deploy on GitHub pages
 
 on:
   push:
@@ -10,12 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - run: npm ci
-      - run: npx @11ty/eleventy --formats=html,jpeg
-      - uses: actions/upload-pages-artifact@v3
+      - uses: withastro/action@v3
 
   deploy:
     # Add a dependency to the build job
@@ -34,5 +29,3 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/deploy-pages@v4
-
-

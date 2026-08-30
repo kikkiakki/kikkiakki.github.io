@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WorksGrid from '../components/WorksGrid.astro';
+import { getUniqueTerms } from '../lib/taxonomy';
+
+const works = (await getCollection('works')).sort((a, b) => b.data.year - a.data.year);
+const series = getUniqueTerms(works, (w) => w.data.series);
+---
+
+<BaseLayout title="Petra Alexson">
+  <h1>works</h1>
+
+  {
+    series.length > 0 && (
+      <nav class="series-filter">
+        {series.map((s) => (
+          <a href={`/works/series/${s.slug}/`}>{s.term}</a>
+        ))}
+      </nav>
+    )
+  }
+
+  <WorksGrid works={works} />
+</BaseLayout>
+
+<style>
+  .series-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0 0 1.5rem;
+  }
+  .series-filter a {
+    text-decoration: none;
+    color: var(--muted);
+    border: 1px solid var(--muted);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  .series-filter a:hover {
+    color: var(--fg);
+    border-color: var(--fg);
+  }
+</style>
