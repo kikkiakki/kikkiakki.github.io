@@ -2,45 +2,36 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WorksGrid from '../components/WorksGrid.astro';
-import { getUniqueTerms } from '../lib/taxonomy';
+import Lightbox from '../components/Lightbox.astro';
+import { HOMEPAGE_TAG } from '../lib/taxonomy';
 
-const works = (await getCollection('works')).sort((a, b) => b.data.year - a.data.year);
-const series = getUniqueTerms(works, (w) => w.data.series);
+const works = (await getCollection('works'))
+  .filter((w) => w.data.series.includes(HOMEPAGE_TAG))
+  .sort((a, b) => b.data.year - a.data.year);
 ---
 
 <BaseLayout title="Petra Alexson">
-  <h1>works</h1>
-
   {
-    series.length > 0 && (
-      <nav class="series-filter">
-        {series.map((s) => (
-          <a href={`/works/series/${s.slug}/`}>{s.term}</a>
-        ))}
-      </nav>
+    works.length > 0 ? (
+      <WorksGrid works={works} />
+    ) : (
+      <p class="empty">
+        No works are marked as selected yet — add <code>"{HOMEPAGE_TAG}"</code> to a piece's{' '}
+        <code>series</code> list in <code>src/content/works/</code> to feature it here.
+      </p>
     )
   }
 
-  <WorksGrid works={works} />
+  <Lightbox works={works} />
+
+  <p class="all-works-link"><a href="/works/">view all works &rarr;</a></p>
 </BaseLayout>
 
 <style>
-  .series-filter {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin: 0 0 1.5rem;
-  }
-  .series-filter a {
-    text-decoration: none;
+  .empty {
     color: var(--muted);
-    border: 1px solid var(--muted);
-    border-radius: 999px;
-    padding: 0.2rem 0.75rem;
-    font-size: 0.85rem;
   }
-  .series-filter a:hover {
-    color: var(--fg);
-    border-color: var(--fg);
+  .all-works-link {
+    margin-top: 2rem;
   }
 </style>

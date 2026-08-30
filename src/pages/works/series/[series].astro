@@ -2,11 +2,12 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import WorksGrid from '../../../components/WorksGrid.astro';
-import { getUniqueTerms } from '../../../lib/taxonomy';
+import Lightbox from '../../../components/Lightbox.astro';
+import { getUniqueTerms, HOMEPAGE_TAG } from '../../../lib/taxonomy';
 
 export async function getStaticPaths() {
   const works = await getCollection('works');
-  const series = getUniqueTerms(works, (w) => w.data.series);
+  const series = getUniqueTerms(works, (w) => w.data.series.filter((s) => s !== HOMEPAGE_TAG));
   return series.map(({ slug, term }) => ({
     params: { series: slug },
     props: { term },
@@ -21,7 +22,8 @@ const works = allWorks
 ---
 
 <BaseLayout title={`${term}`}>
-  <p><a href="/">&larr; all works</a></p>
+  <p><a href="/works/">&larr; all works</a></p>
   <h1>{term}</h1>
   <WorksGrid works={works} />
+  <Lightbox works={works} />
 </BaseLayout>

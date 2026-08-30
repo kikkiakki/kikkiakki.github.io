@@ -12,9 +12,15 @@ export function humanize(slug: string): string {
   return slug.replace(/-/g, ' ');
 }
 
+// tag reserved for works that should appear on the homepage — excluded
+// from series filter chips and from /works/series/<slug> page generation
+export const HOMEPAGE_TAG = 'selected';
+
 // collects the unique set of terms (e.g. series or tags) used across a
 // collection's entries, as { slug, term } pairs, sorted alphabetically
-export function getUniqueTerms<T extends CollectionEntry<'works'> | CollectionEntry<'posts'>>(
+// (T constrained to 'works' for now; add 'posts' back to the union if the
+// blog collection is reintroduced)
+export function getUniqueTerms<T extends CollectionEntry<'works'>>(
   entries: T[],
   getTerms: (entry: T) => string[],
 ): { slug: string; term: string }[] {

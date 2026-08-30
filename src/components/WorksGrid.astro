@@ -1,6 +1,5 @@
 ---
 import { Image, getImage } from 'astro:assets';
-import { render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -11,7 +10,6 @@ const { works } = Astro.props;
 const largeImages = await Promise.all(
   works.map((work) => getImage({ src: work.data.image, width: 1400 })),
 );
-const rendered = await Promise.all(works.map((work) => render(work)));
 ---
 
 <div class="grid">
@@ -30,49 +28,6 @@ const rendered = await Promise.all(works.map((work) => render(work)));
     ))
   }
 </div>
-
-<div hidden>
-  {
-    works.map((work, i) => {
-      const { Content } = rendered[i];
-      return (
-        <div id={`desc-${work.id}`}>
-          <Content />
-        </div>
-      );
-    })
-  }
-</div>
-
-<dialog id="lightbox">
-  <button type="button" id="lightbox-close" aria-label="Close">&times;</button>
-  <img id="lightbox-img" alt="" />
-  <p id="lightbox-caption"></p>
-  <div id="lightbox-desc"></div>
-</dialog>
-
-<script>
-  const dialog = document.getElementById('lightbox') as HTMLDialogElement;
-  const img = document.getElementById('lightbox-img') as HTMLImageElement;
-  const caption = document.getElementById('lightbox-caption')!;
-  const desc = document.getElementById('lightbox-desc')!;
-
-  document.querySelectorAll<HTMLButtonElement>('.thumb').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      img.src = btn.dataset.full ?? '';
-      img.alt = btn.dataset.title ?? '';
-      caption.textContent = `${btn.dataset.title} (${btn.dataset.year})`;
-      const descSource = document.getElementById(btn.dataset.descId ?? '');
-      desc.innerHTML = descSource?.innerHTML ?? '';
-      dialog.showModal();
-    });
-  });
-
-  document.getElementById('lightbox-close')?.addEventListener('click', () => dialog.close());
-  dialog?.addEventListener('click', (event) => {
-    if (event.target === dialog) dialog.close();
-  });
-</script>
 
 <style>
   .grid {
@@ -112,53 +67,5 @@ const rendered = await Promise.all(works.map((work) => render(work)));
   }
   .thumb:hover img {
     opacity: 0.85;
-  }
-  .thumb-title {
-    font-size: 0.9rem;
-    color: var(--muted);
-  }
-
-  #lightbox {
-    border: none;
-    border-radius: 6px;
-    padding: 1rem;
-    max-width: min(90vw, 1000px);
-    max-height: 90vh;
-    background: var(--bg);
-    color: var(--fg);
-  }
-  #lightbox::backdrop {
-    background: rgba(0, 0, 0, 0.75);
-  }
-  #lightbox-img {
-    display: block;
-    max-width: 100%;
-    max-height: 75vh;
-    margin: 0 auto;
-    object-fit: contain;
-  }
-  #lightbox-caption {
-    margin: 0.75rem 0 0;
-    text-align: center;
-    font-weight: 600;
-  }
-  #lightbox-desc {
-    max-width: 60ch;
-    margin: 0.5rem auto 0;
-    color: var(--muted);
-  }
-  #lightbox-desc :global(p) {
-    margin: 0.25rem 0;
-  }
-  #lightbox-close {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    border: none;
-    background: none;
-    font-size: 1.5rem;
-    line-height: 1;
-    cursor: pointer;
-    color: inherit;
   }
 </style>
