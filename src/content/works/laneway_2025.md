@@ -1,8 +1,10 @@
 ---
-title: "laneway"
+title: "Laneway"
 year: 2025
 image: "../../assets/paintings/laneway_2025.jpg"
-series: ["urban landscapes 2025-2026"]
+series: ["paintings", "urban landscapes 2025-2026"]
 ---
 
-Reference provided by Urban Landscapes instructor Brian Harvey
+Oil on canvas
+
+Painted for a class in urban landscapes, reference provided by instructor Brian Harvey

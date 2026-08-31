@@ -15,10 +15,7 @@ const works = (await getCollection('works'))
     works.length > 0 ? (
       <WorksGrid works={works} />
     ) : (
-      <p class="empty">
-        No works are marked as selected yet — add <code>"{HOMEPAGE_TAG}"</code> to a piece's{' '}
-        <code>series</code> list in <code>src/content/works/</code> to feature it here.
-      </p>
+      <p class="empty" />
     )
   }
 

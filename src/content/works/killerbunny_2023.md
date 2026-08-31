@@ -1,6 +1,8 @@
 ---
-title: "killerbunny"
+title: "Killerbunny"
 year: 2023
 image: "../../assets/paintings/killerbunny_2023.jpg"
-series: ["a bunny's world"]
+series: ["paintings"]
 ---
+
+Oil on canvas, 18 × 24 in
