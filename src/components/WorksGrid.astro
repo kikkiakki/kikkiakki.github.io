@@ -1,0 +1,60 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  works: CollectionEntry<'works'>[];
+}
+const { works } = Astro.props;
+
+const largeImages = await Promise.all(
+  works.map((work) => getImage({ src: work.data.image, width: 1400 })),
+);
+---
+
+<div class="grid">
+  {
+    works.map((work, i) => (
+      <button
+        class="thumb"
+        type="button"
+        data-full={largeImages[i].src}
+        data-title={work.data.title}
+        data-year={work.data.year}
+        data-desc-id={`desc-${work.id}`}
+      >
+        <Image src={work.data.image} alt={work.data.title} width={600} loading="lazy" />
+      </button>
+    ))
+  }
+</div>
+
+<style>
+  .grid {
+    columns: 400px;
+    column-gap: 1.25rem;
+  }
+  .thumb {
+    display: block;
+    width: 100%;
+    break-inside: avoid;
+    margin: 0 0 1.25rem;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+  }
+  .thumb img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    transition: opacity 0.15s ease;
+  }
+  .thumb:hover img {
+    opacity: 0.85;
+  }
+</style>

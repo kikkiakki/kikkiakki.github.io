@@ -1,5 +1,13 @@
-# Ignore build output
-_site/
+# build output
+dist/
+.astro/
 
-# Ignore node modules
+# dependencies
 node_modules/
+
+# environment
+.env
+.env.production
+
+# misc
+.DS_Store

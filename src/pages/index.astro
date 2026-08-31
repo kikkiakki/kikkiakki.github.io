@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WorksGrid from '../components/WorksGrid.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { HOMEPAGE_TAG } from '../lib/taxonomy';
+
+const works = (await getCollection('works'))
+  .filter((w) => w.data.series.includes(HOMEPAGE_TAG))
+  .sort((a, b) => b.data.year - a.data.year);
+---
+
+<BaseLayout title="Petra Alexson">
+  {
+    works.length > 0 ? (
+      <WorksGrid works={works} />
+    ) : (
+      <p class="empty" />
+    )
+  }
+
+  <Lightbox works={works} />
+
+  <p class="all-works-link"><a href="/works/">view all works &rarr;</a></p>
+</BaseLayout>
+
+<style>
+  .empty {
+    color: var(--muted);
+  }
+  .all-works-link {
+    margin-top: 2rem;
+  }
+</style>

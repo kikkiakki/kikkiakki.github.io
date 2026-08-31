@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorksGrid from '../../components/WorksGrid.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import { getUniqueTerms, HOMEPAGE_TAG } from '../../lib/taxonomy';
+
+const works = (await getCollection('works')).sort((a, b) => b.data.year - a.data.year);
+const series = getUniqueTerms(works, (w) => w.data.series.filter((s) => s !== HOMEPAGE_TAG));
+const years = [...new Set(works.map((w) => w.data.year))].sort((a, b) => b - a);
+---
+
+<BaseLayout title="all works — Petra Alexson">
+  <h1>all works</h1>
+
+  {
+    series.length > 0 && (
+      <nav class="series-filter">
+        {series.map((s) => (
+          <a href={`/works/series/${s.slug}/`}>{s.term}</a>
+        ))}
+      </nav>
+    )
+  }
+
+  {
+    years.map((year) => (
+      <section class="year-group">
+        <h2>{year}</h2>
+        <WorksGrid works={works.filter((w) => w.data.year === year)} />
+      </section>
+    ))
+  }
+
+  <Lightbox works={works} />
+</BaseLayout>
+
+<style>
+  .series-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0 0 1.5rem;
+  }
+  .series-filter a {
+    text-decoration: none;
+    color: var(--muted);
+    border: 1px solid var(--muted);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  .series-filter a:hover {
+    color: var(--fg);
+    border-color: var(--fg);
+  }
+  .year-group {
+    margin-bottom: 2.5rem;
+  }
+  .year-group h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-bottom: 1px solid color-mix(in srgb, var(--muted) 30%, transparent);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+</style>
