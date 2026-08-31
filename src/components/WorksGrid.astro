@@ -23,7 +23,7 @@ const largeImages = await Promise.all(
         data-year={work.data.year}
         data-desc-id={`desc-${work.id}`}
       >
-        <Image src={work.data.image} alt={work.data.title} height={520} loading="lazy" />
+        <Image src={work.data.image} alt={work.data.title} width={600} loading="lazy" />
       </button>
     ))
   }
@@ -31,17 +31,14 @@ const largeImages = await Promise.all(
 
 <style>
   .grid {
-    --thumb-height: 300px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 1.25rem;
+    columns: 400px;
+    column-gap: 1.25rem;
   }
   .thumb {
-    display: flex;
-    flex-direction: column;
-    flex: 0 0 auto;
-    gap: 0.4rem;
+    display: block;
+    width: 100%;
+    break-inside: avoid;
+    margin: 0 0 1.25rem;
     padding: 0;
     border: none;
     background: none;
@@ -52,18 +49,10 @@ const largeImages = await Promise.all(
   }
   .thumb img {
     display: block;
-    height: var(--thumb-height);
-    width: auto;
-    max-width: 100%;
-    /* falls back to letterboxing (never distorts) if max-width caps the width on narrow screens */
-    object-fit: contain;
+    width: 100%;
+    height: auto;
     border-radius: 4px;
     transition: opacity 0.15s ease;
-  }
-  @media (max-width: 600px) {
-    .grid {
-      --thumb-height: 160px;
-    }
   }
   .thumb:hover img {
     opacity: 0.85;
